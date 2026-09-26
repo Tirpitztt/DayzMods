@@ -1,0 +1,38 @@
+void main()
+{
+	// ... здесь будет ванильный код инициализации погоды и времени ...
+
+	// СПАВН НАШИХ NPC ПРИ СТАРТЕ СЕРВЕРА
+	
+	// 1. Спавним Белого NPC (укажите координаты рядом с Белой базой)
+	vector whiteNpcPos = "4510.0 0 10205.0"; 
+	// 2. БЕЗОПАСНО перезаписываем координату Y (индекс 1 в векторе) высотой земли в этой точке
+	whiteNpcPos[1] = GetGame().SurfaceY(whiteNpcPos[0], whiteNpcPos[2]);
+
+	vector whiteNpcRot = "90 0 0"; // Поворот головы/тела в градусах (Якорь, Тангаж, Крен)
+	
+	EntityAI whiteNpc = EntityAI.Cast(GetGame().CreateObjectEx("WhiteFactionNPC", whiteNpcPos, ECE_NONE));
+	if (whiteNpc)
+	{
+		whiteNpc.SetOrientation("90 0 0");
+		//whiteNpc.SetOrientation(whiteNpcRot);
+		// Одеваем NPC, чтобы он не стоял голым
+		whiteNpc.GetInventory().CreateInInventory("TTSKOJacket");
+		whiteNpc.GetInventory().CreateInInventory("TTSKOPants");
+		whiteNpc.GetInventory().CreateInInventory("CombatBoots_Black");
+	}
+
+	// 2. Спавним Красного NPC (укажите координаты рядом с Красной базой)
+	vector redNpcPos = "11410.0 0 8505.0";
+	redNpcPos[1] = GetGame().SurfaceY(redNpcPos[0], redNpcPos[2]);	
+	vector redNpcRot = "270 0 0";
+	
+	EntityAI redNpc = EntityAI.Cast(GetGame().CreateObjectEx("RedFactionNPC", redNpcPos, ECE_NONE));
+	if (redNpc)
+	{
+		redNpc.SetOrientation(redNpcRot);
+		redNpc.GetInventory().CreateInInventory("GorkaEJacket_Autumn");
+		redNpc.GetInventory().CreateInInventory("GorkaPants_Autumn");
+		redNpc.GetInventory().CreateInInventory("CombatBoots_Brown");
+	}
+}
